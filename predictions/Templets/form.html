@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>House Price Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+      }
+
+      h1 {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      form {
+        margin: 0 auto;
+        width: 400px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      table {
+        width: 100%;
+      }
+
+      td {
+        padding: 10px;
+        text-align: left;
+      }
+
+      input[type="text"] {
+        width: calc(100% - 20px);
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      h2.error {
+        color: red;
+      }
+
+      .message {
+        color: red;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Enter House Features</h1>
+    <div class="message">
+      The predicted price is in USD and will be based on standard US rates.
+    </div>
+    <form method="POST" action="predict_view">
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td><label for="feature1">Enter Area (in Sq.Ft.):</label></td>
+          <td><input type="text" id="feature1" name="feature1" required /></td>
+        </tr>
+        <tr>
+          <td><label for="feature2">Enter No. of Bedrooms:</label></td>
+          <td><input type="text" id="feature2" name="feature2" required /></td>
+        </tr>
+        <tr>
+          <td><label for="feature3">Enter No. of Bathrooms:</label></td>
+          <td><input type="text" id="feature3" name="feature3" required /></td>
+        </tr>
+        <tr>
+          <td><label for="feature4">Enter Build year:</label></td>
+          <td><input type="text" id="feature4" name="feature4" required /></td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="submit" value="Predict" /></td>
+        </tr>
+      </table>
+    </form>
+
+    {% if prediction %}
+    <h2>Predicted Price: {{ prediction }} USD</h2>
+    {% endif %} {% if error_message %}
+    <h2 class="error">Error: {{ error_message }}</h2>
+    {% endif %}
+  </body>
+</html>
